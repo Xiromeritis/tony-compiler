@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "vscjava.vscode-java-pack",
+        "mweberaw.cup",
+        "mweberaw.jflex",
+        "ms-vsliveshare.vsliveshare",
+        "ditorconfig.editorconfig"
+    ]
+}

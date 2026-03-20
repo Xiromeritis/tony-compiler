@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "gr.hua.dit.compilers.Main",
+            "preLaunchTask": "maven-generate"
+        }
+    ]
+}

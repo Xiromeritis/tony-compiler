@@ -1,0 +1,21 @@
+package gr.hua.dit.compilers;
+
+import java_cup.runtime.*;
+
+parser code {:
+    // Connect this parser to a scanner!
+    Lexer lexer;
+    public parser(Lexer lexer) {
+        super(lexer);
+        this.lexer = lexer;
+    }
+:}
+
+/* Terminals (tokens returned by the scanner). */
+terminal SEMI;
+
+/* Non-terminals */
+non terminal Object program;
+
+/* The grammar */
+program ::= SEMI;
