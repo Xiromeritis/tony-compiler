@@ -640,7 +640,7 @@ EBNF. Η γραμματική που ακολουθεί είναι *διφορο
 | ⟨ $program$ ⟩     |  ::=   | ⟨ $func-def$ ⟩                                                                                                   |
 | ⟨ $func-def$ ⟩    |  ::=   | “`def`” ⟨ $header$ ⟩ “:” (⟨ $func-def$ ⟩ &#124; ⟨ $func-decl$ ⟩ &#124; ⟨ $var-def$ ⟩)* ⟨ $stmt$ ⟩+ “`end`”       |
 | ⟨ $header$ ⟩      |  ::=   | [ ⟨ $type$ ⟩ ] ⟨ $id$ ⟩ “`(`” [ ⟨ $formal$ ⟩ (“;” ⟨ $formal$ ⟩)* ] “`)`”                                         |
-| ⟨ $formal$ ⟩      |  ::=   | [ “$ref$” ] ⟨ $type$ ⟩ ⟨ $id$ ⟩ (“,” ⟨ $id$ ⟩)*                                                                  |
+| ⟨ $formal$ ⟩      |  ::=   | [ “ $ref$ ” ] ⟨ $type$ ⟩ ⟨ $id$ ⟩ (“,” ⟨ $id$ ⟩)*                                                                  |
 | ⟨ $type$ ⟩        |  ::=   | “`int`” &#124; “`bool`” &#124; “`char`” &#124; ⟨ $type$ ⟩ “`[`” “`]`” &#124; “`list`” “[” ⟨ $type$ ⟩ “]”         |
 | ⟨ $func-decl$ ⟩   |  ::=   | “`decl`” ⟨ $header$ ⟩                                                                                            |
 | ⟨ $var-def$ ⟩     |  ::=   | ⟨ $type$ ⟩ ⟨ $id$ ⟩ (“,” ⟨ $id$ ⟩)*                                                                              |
