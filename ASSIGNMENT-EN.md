@@ -132,7 +132,7 @@ categories:
 | `or`   | `ref`   | `return` | `skip` | `tail`  |
 | `true` |         |          |        |         |
 
-* *Names*, which consist of a single letter of the Latin
+* *Identifiers*, which consist of a single letter of the Latin
   alphabet, possibly followed by a sequence of
   letters, decimal digits, underscores
   (_), or (Latin) question marks. Names must not
