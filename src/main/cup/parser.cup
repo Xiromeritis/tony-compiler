@@ -12,10 +12,28 @@ parser code {:
 :}
 
 /* Terminals (tokens returned by the scanner). */
-terminal SEMI;
+/* Keywords */
+terminal AND, BOOL, CHAR, DECL, DEF,
+          ELSE, ELSIF, END, EXIT, FALSE,
+          FOR, HEAD, IF, INT, LIST,
+          MOD, NEW, NIL, NILQ, NOT,
+          OR, REF, RETURN, SKIP, TAIL,
+          TRUE;
+
+/* Operators */
+terminal PLUS, MINUS, MULT, DIV, HASH, EQ, NEQ, LT,
+          GT, LEQ, GEQ;
+
+/* Seperators */
+terminal LPAR, RPAR, LBRAC, RBRAC, COMMA, SEMICOLON, COLON, ASSIGN;
+
+/* Constants and identifiers */
+terminal String IDENTIFIER, STRING;
+terminal Character CHARACTER;
+terminal Integer INTEGER;
 
 /* Non-terminals */
 non terminal Object program;
 
 /* The grammar */
-program ::= SEMI;
+program ::= /* empty */ ;
