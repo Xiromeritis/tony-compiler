@@ -168,7 +168,7 @@ String      = \"({CommonChar} | {Escape})*\"
       if (yytext().length() > 64) {
           throw new RuntimeException("Lexical Error: Identifier '" + yytext().substring(0,15) + "...' exceeds 64 characters at line " + (yyline + 1));
       }
-      return symbol(sym.IDENTIFIER, yytext());
+      return symbol(sym.ID, yytext());
   }
 
   /* Spaces and single-line comments */

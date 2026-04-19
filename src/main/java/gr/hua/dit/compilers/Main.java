@@ -1,75 +1,93 @@
 package gr.hua.dit.compilers;
 
-import gr.hua.dit.compilers.Lexer;
-import gr.hua.dit.compilers.parser;
-import java_cup.runtime.Symbol;
+import java.io.File;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-
+/**
+ * The entry point of the Tony Compiler.
+ * Acts as a CLI (Command Line Interface) router that parses user arguments
+ * and directs the execution flow to either the Lexical or Syntax analysis phase.
+ */
 public class Main {
   public static void main(String[] args) {
 
-    // Check if user provided input file
-    if (args.length != 1) {
-      System.err.println("Usage: java gr.hua.dit.compilers.Main <input_file.tony>");
+    if (args.length == 0) {
+      System.err.println("Usage: java -jar target/compiler-0.2.jar [--lex | --parse] <input_file.tony>");
       System.exit(1);
     }
 
-    try {
-      // Initialize Lexer and connect it to input file
-      Lexer lexer = new Lexer(new FileReader(args[0]));
-      Symbol token;
+    // Parse arguments
+    String flag = "";
+    String filePath;
 
-      System.out.println("=========================================================");
-      System.out.println("            Starting Lexical Analysis (Tony)             ");
-      System.out.println("=========================================================");
+    if (args.length == 2) {
+      flag = args[0];        // e.g., --lex
+      filePath = args[1];   // e.g., test.tony
+    } else {
+      filePath = args[0];   // Default: just the file path
+    }
 
-      // Read tokens until EOF is reached
-      do {
-        token = lexer.next_token();
-
-        // Attempt to retrieve string name of token from sym.java
-        String tokenName;
-        try {
-          tokenName = sym.terminalNames[token.sym];
-        } catch (Exception e) {
-          // Fallback to numeric ID if terminalNames missing
-          tokenName = "UNKNOWN";
-        }
-
-        // Print using formatting for perfect column alignment
-        // %-4d  : Prints the integer left-aligned in a 4-character wide column
-        // %-15s : Prints the string left-aligned in a 15-character wide column
-        System.out.printf("Token ID: %-4d | Token: %-15s", token.sym, tokenName);
-
-        // If token carries a value, print it
-        if (token.value != null) {
-          System.out.printf(" | Value: %s", token.value);
-        }
-        System.out.println();
-
-      } while (token.sym != sym.EOF);
-
-      System.out.println("=========================================================");
-      System.out.println("Lexical analysis completed successfully!");
-
-      // Exit code 0 --> Success
-      System.exit(0);
-
-    } catch (FileNotFoundException e) {
-      System.err.println("Error: The file '" + args[0] + "' was not found.");
-      System.exit(1);
-
-    } catch (RuntimeException | Error e) {
-      // Catch lexical errors thrown by Lexer
-      System.err.println(e.getMessage());
-      System.exit(1);
-
-    } catch (Exception e) {
-      // Catch any other exceptions
-      System.err.println("An unexpected error occurred: " + e.getMessage());
+    // Verify file exists before doing anything
+    File file = new File(filePath);
+    if (!file.exists()) {
+      System.err.println("Error: The file '" + filePath + "' was not found.");
       System.exit(1);
     }
+
+    // Route the request based on the flag
+    switch (flag) {
+      case "--lex":
+        LexicalAnalysis.run(filePath);
+        break;
+      case "--parse":
+        SyntaxAnalysis.run(filePath);
+        break;
+      default:
+        // If no flag is provided, run both sequentially!
+        LexicalAnalysis.run(filePath);
+        System.out.println("\n");
+        SyntaxAnalysis.run(filePath);
+        break;
+    }
+  }
+
+  // Format AST for readability
+  public static String formatAST(String raw) {
+    String[] lines = raw.replace("\r", "").split("\n");
+    StringBuilder result = new StringBuilder();
+    int currentIndent = 0;
+
+    for (String line : lines) {
+      line = line.trim();
+      if (line.isEmpty()) continue;
+
+      int closeAtStart = 0;
+      for (int i = 0; i < line.length(); i++) {
+        char c = line.charAt(i);
+        if (c == ')' || c == ']') {
+          closeAtStart++;
+        } else if (c != ',' && c != ' ') {
+          break;
+        }
+      }
+
+      int printIndent = Math.max(0, currentIndent - closeAtStart);
+      result.repeat("    ", printIndent);
+      result.append(line).append("\n");
+
+      int openCount = 0;
+      int closeCount = 0;
+      boolean inQuotes = false;
+
+      for (char c : line.toCharArray()) {
+        if (c == '"') inQuotes = !inQuotes;
+        if (!inQuotes) {
+          if (c == '(' || c == '[') openCount++;
+          else if (c == ')' || c == ']') closeCount++;
+        }
+      }
+      currentIndent += (openCount - closeCount);
+      if (currentIndent < 0) currentIndent = 0;
+    }
+    return result.toString();
   }
 }
