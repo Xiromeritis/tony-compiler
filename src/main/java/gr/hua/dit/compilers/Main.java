@@ -11,7 +11,7 @@ public class Main {
   public static void main(String[] args) {
 
     if (args.length == 0) {
-      System.err.println("Usage: java -jar target/compiler-0.2.jar [--lex | --parse] <input_file.tony>");
+      System.err.println("Usage: java -jar target/compiler-0.3.jar [--lex | --parse] <input_file.tony>");
       System.exit(1);
     }
 
