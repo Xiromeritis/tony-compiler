@@ -1,4 +1,6 @@
 package gr.hua.dit.compilers.ast;
+import gr.hua.dit.compilers.visitors.Visitor;
+
 import java.util.List;
 
 public class FormalNode extends ASTNode {
@@ -12,10 +14,17 @@ public class FormalNode extends ASTNode {
     this.ids = ids;
   }
 
+  public TypeNode getType() { return type; }
+
+  public List<String> getIds() { return ids; }
+
   @Override
   public String toString() {
     String refStr = isRef ? "ref " : "";
     String typeStr = type != null ? type.toString() : "unknown";
     return "Formal(" + refStr + typeStr + " " + ids.toString() + ")";
   }
+
+  @Override
+  public void accept(Visitor visitor) { visitor.visit(this); }
 }

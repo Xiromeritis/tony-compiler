@@ -1,4 +1,6 @@
 package gr.hua.dit.compilers.ast;
+import gr.hua.dit.compilers.visitors.Visitor;
+
 import java.util.List;
 
 public class ForStmt extends Stmt {
@@ -18,4 +20,7 @@ public class ForStmt extends Stmt {
   public String toString() {
     return "For(init: " + initList + ", cond: " + cond + ", step: " + steps + ",\n      body: " + body + ")";
   }
+
+  @Override
+  public void accept(Visitor visitor) { visitor.visit(this); }
 }

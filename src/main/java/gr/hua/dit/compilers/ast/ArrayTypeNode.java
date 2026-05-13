@@ -1,5 +1,7 @@
 package gr.hua.dit.compilers.ast;
 
+import gr.hua.dit.compilers.visitors.Visitor;
+
 public class ArrayTypeNode extends TypeNode {
   private final TypeNode baseType;
 
@@ -7,4 +9,7 @@ public class ArrayTypeNode extends TypeNode {
     super(baseType + "[]");
     this.baseType = baseType;
   }
+
+  @Override
+  public void accept(Visitor visitor) { visitor.visit(this); }
 }

@@ -1,5 +1,7 @@
 package gr.hua.dit.compilers.ast;
 
+import gr.hua.dit.compilers.visitors.Visitor;
+
 public class CallStmt extends Stmt {
   private final CallNode call;
 
@@ -9,4 +11,7 @@ public class CallStmt extends Stmt {
   public String toString() {
     return "CallStmt(" + call.toString() + ")";
   }
+
+  @Override
+  public void accept(Visitor visitor) { visitor.visit(this); }
 }

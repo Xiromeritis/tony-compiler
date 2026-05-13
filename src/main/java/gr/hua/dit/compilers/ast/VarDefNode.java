@@ -1,4 +1,6 @@
 package gr.hua.dit.compilers.ast;
+import gr.hua.dit.compilers.visitors.Visitor;
+
 import java.util.List;
 
 public class VarDefNode extends ASTNode {
@@ -10,9 +12,16 @@ public class VarDefNode extends ASTNode {
     this.ids = ids;
   }
 
+  public TypeNode getType() { return type; }
+
+  public List<String> getIds() { return ids; }
+
   @Override
   public String toString() {
     String typeStr = type != null ? type.toString() : "unknown";
     return "VarDef(" + typeStr + " " + ids.toString() + ")";
   }
+
+  @Override
+  public void accept(Visitor visitor) { visitor.visit(this); }
 }

@@ -1,5 +1,7 @@
 package gr.hua.dit.compilers.ast;
 
+import gr.hua.dit.compilers.visitors.Visitor;
+
 public class StringNode extends Expr {
   private final String value;
 
@@ -9,4 +11,7 @@ public class StringNode extends Expr {
   public String toString() {
     return "String(" + value + ")";
   }
+
+  @Override
+  public void accept(Visitor visitor) { visitor.visit(this); }
 }

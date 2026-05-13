@@ -1,4 +1,6 @@
 package gr.hua.dit.compilers.ast;
+import gr.hua.dit.compilers.visitors.Visitor;
+
 import java.util.List;
 
 public class FuncDefNode extends ASTNode {
@@ -11,6 +13,12 @@ public class FuncDefNode extends ASTNode {
     this.localDecls = localDecls;
     this.stmts = stmts;
   }
+
+  public HeaderNode getHeader() { return header; }
+
+  public List<ASTNode> getLocalDecls() { return localDecls; }
+
+  public List<Stmt> getStmts() { return stmts; }
 
   @Override
   public String toString() {
@@ -29,4 +37,7 @@ public class FuncDefNode extends ASTNode {
     sb.append("\n)");
     return sb.toString();
   }
+
+  @Override
+  public void accept(Visitor visitor) { visitor.visit(this); }
 }

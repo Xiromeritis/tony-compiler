@@ -1,4 +1,6 @@
 package gr.hua.dit.compilers.ast;
+import gr.hua.dit.compilers.visitors.Visitor;
+
 import java.util.List;
 
 public class IfStmt extends Stmt {
@@ -20,4 +22,7 @@ public class IfStmt extends Stmt {
       (elsifStmts != null && !elsifStmts.isEmpty() ? ", elsifs: " + elsifStmts : "") +
       (elseBody != null ? ", else: " + elseBody : "") + ")";
   }
+
+  @Override
+  public void accept(Visitor visitor) { visitor.visit(this); }
 }

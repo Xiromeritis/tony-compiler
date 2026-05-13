@@ -1,4 +1,6 @@
 package gr.hua.dit.compilers.ast;
+import gr.hua.dit.compilers.visitors.Visitor;
+
 import java.util.List;
 
 public class CallNode extends Expr {
@@ -10,8 +12,15 @@ public class CallNode extends Expr {
     this.arguments = arguments;
   }
 
+  public String getFunctionName() { return functionName; }
+
+  public List<Expr> getArguments() { return arguments; }
+
   @Override
   public String toString() {
     return "Call(" + functionName + ", args: " + arguments + ")";
   }
+
+  @Override
+  public void accept(Visitor visitor) { visitor.visit(this); }
 }
