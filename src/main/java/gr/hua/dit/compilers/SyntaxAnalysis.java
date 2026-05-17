@@ -29,6 +29,9 @@ public class SyntaxAnalysis {
         System.out.println("                Abstract Syntax Tree (AST)               ");
         System.out.println("=========================================================");
         System.out.println(Main.formatAST(root.toString()));
+
+        // Delegate execution to the dedicated Semantic Analysis phase
+        SemanticAnalysis.run(root);
       }
 
     } catch (Exception e) {

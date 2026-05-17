@@ -1,45 +1,27 @@
-# Tony Compiler (Phase 2: Syntax Analysis)
+# Tony Compiler (Phase 3: Semantic Analysis)
 
 A multi-pass compiler for the **Tony** programming language, developed in Java using **JFlex** (Lexical Analysis) and **Java CUP** (Syntax Analysis).
 
-This project is currently in **Phase 2 (Syntax Analysis)** and is capable of tokenizing source code, validating its syntax against the language grammar, and constructing a fully formatted Abstract Syntax Tree (AST).
+This project is currently in **Phase 3 (Semantic Analysis - Scope Checking)** and is capable of tokenizing source code, validating its syntax against the language grammar, constructing a fully formatted Abstract Syntax Tree (AST), and strictly enforcing language scope rules via a dynamic Symbol Table.
 
 ## Implemented Features
 
-### Lexical Analysis
-
+### Lexical Analysis (Phase 1)
 The Lexer accurately tokenizes Tony source code and includes several advanced constraints and safety checks:
 - **Nested Comments:** Fully supports single-line (`%`) and nested multi-line (`<* ... *>`) comments, including EOF detection for unclosed comments.
-- **Strict Integer Bounds:** Handles 16-bit integer limits (up to `32767`, deliberately allowing `32767 + 1` to support negative values at the parser level).
 - **String & Character Parsing:** Correctly parses and unescapes standard (`\n`, `\t`) and hexadecimal (`\xNN`) escape sequences into native Java `Character` objects.
 - **Identifier Constraints:** Enforces a maximum length of 64 characters for variable and function names.
-- **Formatted Output:** Prints tokenized output in a clean, perfectly aligned console table for easy debugging.
 
-### Syntax Analysis
+### Syntax Analysis (Phase 2)
+- **Robust Syntax Parsing**: Enforces precedence rules and validates language grammar using a CUP-generated LALR parser.
+- **AST Generation**: Converts raw code into a structured Object-Oriented tree hierarchy.
+- **Visual Output**: Pretty-prints the AST hierarchy in the console for easy debugging and structural verification.
 
-* **Robust Syntax Parsing**: Enforces precedence rules (e.g., Unary minus vs. Binary minus) and validates language grammar.
-* **AST Generation**: Converts raw code into a structured Object-Oriented tree hierarchy.
-* **Pretty-Printed AST**: Features a custom-built string formatter that automatically indents nested nodes (Functions, Loops, IF-blocks) without relying on memory addresses (`@hashcodes`).
-* **Advanced Error Handling**: Provides clear error messages with **line and column tracking** for syntax errors.
-
-## Dependencies
-
-The project is built around the following key tools:
-- **Java 21**
-- **Maven** (using Maven Wrapper)
-- **JFlex**: Generates the lexical analyzer (`Lexer.java`).
-- **Java CUP**: Generates the parser interface and symbol tables (`sym.java`).
-
-## Project Structure
-
-The compiler architecture follows strict Separation of Concerns:
-
-* **`src/main/jflex/lexer.flex`**: The lexical specification file. Defines the rules for generating tokens.
-* **`src/main/cup/parser.cup`**: The LALR grammar specification file. Defines the syntax rules and AST node generation.
-* **`gr/hua/dit/compilers/ast/`**: Contains the hierarchy of Abstract Syntax Tree (AST) nodes (e.g., `IfStmt`, `BinaryNode`, `FuncDefNode`).
-* **`gr/hua/dit/compilers/LexicalAnalysis.java`**: Handles Phase 1 (Tokenization).
-* **`gr/hua/dit/compilers/SyntaxAnalysis.java`**: Handles Phase 2 (Parsing & AST construction).
-* **`gr/hua/dit/compilers/Main.java`**: The CLI router that processes user arguments and triggers the appropriate compilation phases.
+### Semantic Analysis – Scope Checking (Phase 3)
+- **Dynamic Symbol Table**: Implements a Stack of Maps (`Stack<Map<String, SymbolEntry>>`) to elegantly handle nested block scopes (global, functions, etc.).
+- **Declaration Validation**: Detects and reports duplicate variable, parameter, or function declarations within the same scope.
+- **Reference Resolution**: Identifies the use of undefined variables or calls to undeclared functions (`UndefinedVarException`, `SemanticError`).
+- **Visitor Pattern Architecture**: Utilizes an `AbstractVisitor` (`ScopeChecker`) to traverse the AST without polluting the data classes with operational logic.
 
 ## How to Build
 
@@ -59,7 +41,7 @@ During the `package` phase, Maven will:
 
 ## Usage & CLI Flags
 
-After a successful build, a shaded JAR named `compiler-0.3.jar` will be generated in the `target/` directory.
+After a successful build, a shaded JAR named `compiler-0.4.jar` will be generated in the `target/` directory.
 
 The compiler features a modern CLI that allows you to test different phases of the compilation process independently using flags.
 To execute the analyzer(s) on a `.tony` source file, run:
@@ -68,7 +50,7 @@ To execute the analyzer(s) on a `.tony` source file, run:
 
 Prints a formatted table of all tokens found in the file.
 ```bash
-java -jar target/compiler-0.3.jar --lex path/to/your/file.tony
+java -jar target/compiler-0.4.jar --lex path/to/your/file.tony
 ```
 
 > This will output a formatted table of all tokens identified in the source file, alongside their respective IDs and captured values.
@@ -78,21 +60,21 @@ java -jar target/compiler-0.3.jar --lex path/to/your/file.tony
 Parses the file and prints the Abstract Syntax Tree.
 
 ```bash
-java -jar target/compiler-0.3.jar --parse path/to/your/file.tony
+java -jar target/compiler-0.4.jar --parse path/to/your/file.tony
 ```
 
 > This will output the Abstract Syntax Tree (AST) generated from the source file.
 
 
-**3. Full Compilation (Both Phases):**
+**3. Full Pipeline (Lexical, Syntax, and Semantic Scope Checking):**
 
-If no flag is provided, the compiler will sequentially run the Lexer, followed by the Parser.
+If no flag is provided, the compiler will sequentially run the Lexer, the Parser, and finally the Semantic Analyzer.
 
 ```bash
-java -jar target/compiler-0.3.jar path/to/your/file.tony
+java -jar target/compiler-0.4.jar path/to/your/file.tony
 ```
 
-> This will output both the Lexer and Parser output, alongside the Abstract Syntax Tree.
+> Outputs token tables, the AST, and performs a full semantic scan. Any scope errors (e.g., undefined variables) will be printed to standard error.
 
 ## License
 

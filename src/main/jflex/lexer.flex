@@ -147,10 +147,6 @@ String      = \"({CommonChar} | {Escape})*\"
 
       try {
           int value = Integer.parseInt(yytext());
-          // Check bounds (16-bit max = 32767)
-          if (value > 32767 + 1) {
-              throw new RuntimeException("Lexical Error: Integer " + value + " is out of bounds (max 32767) at line " + (yyline + 1));
-          }
           return symbol(sym.INTEGER, value);
       } catch (NumberFormatException e) {
           // Catches astronomically large numbers that don't fit in an int

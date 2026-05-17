@@ -40,4 +40,11 @@ public class SymbolTable {
         }
         throw new UndefinedVarException("Variable " + name + " is undefined");
     }
+
+    public boolean exists(String name) {
+      for (Map<String, SymbolEntry> m : scopes.reversed()) {
+        if (m.containsKey(name)) return true;
+      }
+      return false;
+  }
 }

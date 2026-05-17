@@ -5,10 +5,10 @@
 
   <groupId>gr.hua.dit.compilers</groupId>
   <artifactId>compiler</artifactId>
-  <version>0.3</version>
+  <version>0.4</version>
   <packaging>jar</packaging>
 
-  <name>comp-java-syntax-analysis</name>
+  <name>comp-java-semantic-analysis-scope-check</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -1,6 +1,7 @@
 package gr.hua.dit.compilers.visitors;
 
 import gr.hua.dit.compilers.ast.*;
+import gr.hua.dit.compilers.symbols.SymbolEntry;
 import gr.hua.dit.compilers.symbols.SymbolTable;
 import gr.hua.dit.compilers.SemanticError;
 
@@ -88,11 +89,8 @@ public class ScopeChecker extends AbstractVisitor {
 
   @Override
   public void visit(IdNode node) {
-    // Check if identifier exists using getEntry
-    try {
-      symbolTable.getEntry(node.getName());
-    } catch (SemanticError e) {
-      System.err.println("[Semantic Error] " + e.getMessage());
+    if (!symbolTable.exists(node.getName())) {
+      System.err.println("[Semantic Error] Variable " + node.getName() + " is undefined");
     }
   }
 
@@ -100,7 +98,7 @@ public class ScopeChecker extends AbstractVisitor {
   public void visit(CallNode node) {
     // Check if function exists using getEntry
     try {
-      symbolTable.getEntry(node.getFunctionName());
+      SymbolEntry ignored = symbolTable.getEntry(node.getFunctionName()); // <-- Πρόσθεσε το "SymbolEntry ignored ="
     } catch (SemanticError e) {
       System.err.println("[Semantic Error] " + e.getMessage());
     }
