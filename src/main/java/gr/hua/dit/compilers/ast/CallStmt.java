@@ -7,6 +7,8 @@ public class CallStmt extends Stmt {
 
   public CallStmt(CallNode call) { this.call = call; }
 
+  public CallNode getCall() { return call; }
+
   @Override
   public String toString() {
     return "CallStmt(" + call.toString() + ")";

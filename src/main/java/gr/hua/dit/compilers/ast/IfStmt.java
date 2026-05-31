@@ -16,6 +16,11 @@ public class IfStmt extends Stmt {
     this.elseBody = elseBody;
   }
 
+  public Expr getCond() { return cond; }
+  public List<Stmt> getIfBody() { return ifBody; }
+  public List<ElsifStmt> getElsifStmts() { return elsifStmts; }
+  public List<Stmt> getElseBody() { return elseBody; }
+
   @Override
   public String toString() {
     return "If(cond: " + cond + ", body: " + ifBody +

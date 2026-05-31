@@ -16,6 +16,11 @@ public class ForStmt extends Stmt {
     this.body = body;
   }
 
+  public List<Stmt> getInitList() { return initList; }
+  public Expr getCond() { return cond; }
+  public List<Stmt> getSteps() { return steps; }
+  public List<Stmt> getBody() { return body; }
+
   @Override
   public String toString() {
     return "For(init: " + initList + ", cond: " + cond + ", step: " + steps + ",\n      body: " + body + ")";

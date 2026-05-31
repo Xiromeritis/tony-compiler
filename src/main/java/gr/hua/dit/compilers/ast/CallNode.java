@@ -13,7 +13,6 @@ public class CallNode extends Expr {
   }
 
   public String getFunctionName() { return functionName; }
-
   public List<Expr> getArguments() { return arguments; }
 
   @Override

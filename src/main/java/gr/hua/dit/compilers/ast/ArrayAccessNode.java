@@ -11,6 +11,9 @@ public class ArrayAccessNode extends Expr {
     this.index = index;
   }
 
+  public Expr getArray() { return array; }
+  public Expr getIndex() { return index; }
+
   @Override
   public String toString() {
     return "ArrayAccess(" + array + "[" + index + "])";

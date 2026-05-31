@@ -12,7 +12,6 @@ public class AssignStmt extends Stmt {
   }
 
   public Expr getTarget() { return target; }
-
   public Expr getE() { return e; }
 
   @Override

@@ -7,6 +7,8 @@ public class ReturnStmt extends Stmt {
 
   public ReturnStmt(Expr e) { this.e = e; }
 
+  public Expr getExpr() { return e; }
+
   @Override
   public String toString() {
     return "Return(" + e + ")";

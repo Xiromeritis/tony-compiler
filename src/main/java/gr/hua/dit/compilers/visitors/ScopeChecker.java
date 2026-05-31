@@ -98,7 +98,7 @@ public class ScopeChecker extends AbstractVisitor {
   public void visit(CallNode node) {
     // Check if function exists using getEntry
     try {
-      SymbolEntry ignored = symbolTable.getEntry(node.getFunctionName()); // <-- Πρόσθεσε το "SymbolEntry ignored ="
+      SymbolEntry ignored = symbolTable.getEntry(node.getFunctionName());
     } catch (SemanticError e) {
       System.err.println("[Semantic Error] " + e.getMessage());
     }

@@ -12,6 +12,9 @@ public class ElsifStmt extends ASTNode {
     this.body = body;
   }
 
+  public Expr getCond() { return cond; }
+  public List<Stmt> getBody() { return body; }
+
   @Override
   public String toString() {
     return "Elsif(cond: " + cond + ", body: " + body + ")";

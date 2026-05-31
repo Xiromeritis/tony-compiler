@@ -11,6 +11,9 @@ public class NewArrayNode extends Expr {
     this.size = size;
   }
 
+  public TypeNode getType() { return type; }
+  public Expr getExpr() { return size; }
+
   @Override
   public String toString() {
     return "NewArray(" + type + "[" + size + "])";
