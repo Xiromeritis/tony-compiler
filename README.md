@@ -98,14 +98,14 @@ The compiler features a modern CLI that allows you to test different phases of t
 
 **1. Phase 1 Only (Lexical Analysis):**
 ```bash
-java -jar target/compiler-0.5.jar --lex path/to/your/file.tony
+java -jar target/compiler-1.0.jar --lex path/to/your/file.tony
 ```
 
 > Outputs a formatted table of all tokens identified in the source file, alongside their IDs.
 
 **2. Phase 2 Only (Syntax Analysis & AST):**
 ```bash
-java -jar target/compiler-0.5.jar --parse path/to/your/file.tony
+java -jar target/compiler-1.0.jar --parse path/to/your/file.tony
 ```
 
 > Outputs the Abstract Syntax Tree (AST) generated from the source file.
@@ -113,7 +113,7 @@ java -jar target/compiler-0.5.jar --parse path/to/your/file.tony
 **3. Full Pipeline (Compilation to LLVM):**
 If no flag is provided, the compiler will sequentially run Lexical, Syntax, Semantic Analysis, and Code Generation.
 ```bash
-java -jar target/compiler-0.5.jar path/to/your/file.tony
+java -jar target/compiler-1.0.jar path/to/your/file.tony
 ```
 
 > Outputs token tables, the AST, performs a semantic scan, and successfully generates an `output.ll` file in the working directory.
