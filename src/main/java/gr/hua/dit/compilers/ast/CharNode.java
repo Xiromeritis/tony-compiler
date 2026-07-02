@@ -7,6 +7,8 @@ public class CharNode extends Expr {
 
   public CharNode(Character value) { this.value = value; }
 
+  public Character getValue() { return value; }
+
   @Override
   public String toString() {
     return "Char('" + value + "')";

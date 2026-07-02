@@ -7,6 +7,8 @@ public class BooleanNode extends Expr {
 
   public BooleanNode(boolean value) { this.value = value; }
 
+  public boolean getValue() { return value; }
+
   @Override
   public String toString() {
     return "Bool(" + value + ")";

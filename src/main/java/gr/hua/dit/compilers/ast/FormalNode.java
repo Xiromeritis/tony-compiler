@@ -18,6 +18,10 @@ public class FormalNode extends ASTNode {
 
   public List<String> getIds() { return ids; }
 
+  public boolean isRef() {
+    return isRef;
+  }
+
   @Override
   public String toString() {
     String refStr = isRef ? "ref " : "";

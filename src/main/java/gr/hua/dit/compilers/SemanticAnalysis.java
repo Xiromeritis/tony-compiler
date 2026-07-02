@@ -1,6 +1,7 @@
 package gr.hua.dit.compilers;
 
 import gr.hua.dit.compilers.ast.ProgramNode;
+import gr.hua.dit.compilers.visitors.CodeGenerator;
 import gr.hua.dit.compilers.visitors.ScopeChecker;
 import gr.hua.dit.compilers.visitors.TypeChecker;
 
@@ -25,5 +26,12 @@ public class SemanticAnalysis {
     TypeChecker typeChecker = new TypeChecker();
     root.accept(typeChecker);
     System.out.println("Type checking completed.");
+
+    // --- Deliverable 5: Code Generation ---
+    System.out.println("\n=========================================================");
+    System.out.println("             Phase 5: Code Generation (LLVM)             ");
+    System.out.println("=========================================================");
+    CodeGenerator codeGen = new CodeGenerator();
+    codeGen.generate(root, "output.ll");
   }
 }
