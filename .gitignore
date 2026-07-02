@@ -1,17 +1,28 @@
+# Maven build directory
 target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
-# https://github.com/takari/maven-wrapper#usage-without-binary-jar
-.mvn/wrapper/maven-wrapper.jar
 
-# Eclipse m2e generated files
-# Eclipse Core
-.project
-# JDT-specific (Eclipse Java Development Tools)
-.classpath
+# IntelliJ IDEA / Eclipse / VS Code
+.idea/
+*.iml
+.vscode/
+
+# LLVM IR generated files
+*.ll
+
+# Compiled C/LLVM Executables and object files
+*.o
+*.out
+bubblesort
+comments
+hanoi
+hello
+primes
+quicksort
+reverse
+test_scope
+test_type
+program
+
+# OS generated files
+.DS_Store
+Thumbs.db

@@ -27,7 +27,7 @@ public class SemanticAnalysis {
     root.accept(typeChecker);
     System.out.println("Type checking completed.");
 
-    // --- Deliverable 5: Code Generation ---
+    // --- Code Generation ---
     System.out.println("\n=========================================================");
     System.out.println("             Phase 5: Code Generation (LLVM)             ");
     System.out.println("=========================================================");
