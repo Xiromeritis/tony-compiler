@@ -1,17 +1,24 @@
 package gr.hua.dit.compilers;
 
 import java.io.File;
+import java.io.FileReader;
+
+// Σιγουρέψου ότι αυτά τα imports δείχνουν στους σωστούς φακέλους του project σου!
+import gr.hua.dit.compilers.ast.ProgramNode;
+import gr.hua.dit.compilers.visitors.ScopeChecker;
+import gr.hua.dit.compilers.visitors.CodeGenerator;
 
 /**
  * The entry point of the Tony Compiler.
  * Acts as a CLI (Command Line Interface) router that parses user arguments
- * and directs the execution flow to either the Lexical or Syntax analysis phase.
+ * and directs the execution flow.
  */
 public class Main {
   public static void main(String[] args) {
 
     if (args.length == 0) {
-      System.err.println("Usage: java -jar target/compiler-0.3.jar [--lex | --parse] <input_file.tony>");
+      // Ενημερώθηκε σε compiler-1.0.jar
+      System.err.println("Usage: java -jar target/compiler-1.0.jar [--lex | --parse] <input_file.tony>");
       System.exit(1);
     }
 
@@ -42,10 +49,35 @@ public class Main {
         SyntaxAnalysis.run(filePath);
         break;
       default:
-        // If no flag is provided, run both sequentially!
-        LexicalAnalysis.run(filePath);
-        System.out.println("\n");
-        SyntaxAnalysis.run(filePath);
+        // ==========================================
+        // FULL COMPILATION PIPELINE (No flags)
+        // ==========================================
+        try {
+          Lexer lexer = new Lexer(new FileReader(filePath));
+          parser p = new parser(lexer);
+
+          ProgramNode root = (ProgramNode) p.parse().value;
+
+          ScopeChecker semantic = new ScopeChecker();
+          root.accept(semantic);
+
+          if (semantic.getErrorCount() > 0) {
+            System.err.println("\n[COMPILATION HALTED] " + semantic.getErrorCount() + " semantic error(s) found.");
+            System.exit(1);
+          }
+
+          // --- Code Generation ---
+          System.out.println("\n=========================================================");
+          System.out.println("             Phase 5: Code Generation (LLVM)             ");
+          System.out.println("=========================================================");
+          CodeGenerator codeGen = new CodeGenerator();
+          codeGen.generate(root, "output.ll");
+
+        } catch (Exception e) {
+          System.err.println("\n[SYNTAX ERROR] Compilation Failed.");
+          System.err.println("Details: " + e.getMessage());
+          System.exit(1);
+        }
         break;
     }
   }

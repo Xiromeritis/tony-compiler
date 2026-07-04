@@ -9,6 +9,8 @@ public class ScopeChecker extends AbstractVisitor {
 
   private final SymbolTable symbolTable;
 
+  private int errorCount = 0;
+
   public ScopeChecker() {
     this.symbolTable = new SymbolTable();
   }
@@ -21,7 +23,12 @@ public class ScopeChecker extends AbstractVisitor {
       node.getMainFunc().accept(this);
     }
 
-    symbolTable.exitScope(); // Close global scope
+    symbolTable.exitScope(); // Close global scopε
+
+    if (errorCount > 0) {
+      System.err.println("Compilation halted: " + errorCount + " semantic error(s) found.");
+      System.exit(1);
+    }
   }
 
   @Override
@@ -33,6 +40,7 @@ public class ScopeChecker extends AbstractVisitor {
       symbolTable.addEntry(funcName, node.getHeader().getReturnType());
     } catch (SemanticError e) {
       System.err.println("[Semantic Error] " + e.getMessage());
+      errorCount++;
     }
 
     // Open new scope for the function body
@@ -71,6 +79,7 @@ public class ScopeChecker extends AbstractVisitor {
         symbolTable.addEntry(id, node.getType());
       } catch (SemanticError e) {
         System.err.println("[Semantic Error] " + e.getMessage());
+        errorCount++;
       }
     }
   }
@@ -83,6 +92,7 @@ public class ScopeChecker extends AbstractVisitor {
         symbolTable.addEntry(id, node.getType());
       } catch (SemanticError e) {
         System.err.println("[Semantic Error] " + e.getMessage());
+        errorCount++;
       }
     }
   }
@@ -91,6 +101,7 @@ public class ScopeChecker extends AbstractVisitor {
   public void visit(IdNode node) {
     if (!symbolTable.exists(node.getName())) {
       System.err.println("[Semantic Error] Variable " + node.getName() + " is undefined");
+      errorCount++;
     }
   }
 
@@ -101,6 +112,7 @@ public class ScopeChecker extends AbstractVisitor {
       SymbolEntry ignored = symbolTable.getEntry(node.getFunctionName());
     } catch (SemanticError e) {
       System.err.println("[Semantic Error] " + e.getMessage());
+      errorCount++;
     }
 
     // Visit arguments
@@ -115,5 +127,9 @@ public class ScopeChecker extends AbstractVisitor {
   public void visit(AssignStmt node) {
     if (node.getTarget() != null) node.getTarget().accept(this);
     if (node.getE() != null) node.getE().accept(this);
+  }
+
+  public int getErrorCount() {
+    return errorCount;
   }
 }
