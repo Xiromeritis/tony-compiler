@@ -72,9 +72,8 @@ tony-compiler/
 ├── src/main/java/      # Compiler source code (AST, Visitors, Symbol Table)
 ├── src/main/jflex/     # Lexer specification (lexer.flex)
 ├── src/main/cup/       # Parser specification (parser.cup)
-├── examples/           # Tony source code examples (bubblesort, primes, etc.)
 ├── lib.c               # C standard library wrapper for Tony built-ins
-├── run_all.sh          # Automation script for batch compilation and execution
+├── compile.sh          # Automation script for batch compilation and execution
 ├── pom.xml             # Maven configuration and dependencies
 └── README.md           # Project documentation
 ```
