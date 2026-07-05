@@ -1,7 +1,6 @@
 package gr.hua.dit.compilers;
 
 import gr.hua.dit.compilers.ast.ProgramNode;
-import gr.hua.dit.compilers.visitors.CodeGenerator;
 import gr.hua.dit.compilers.visitors.ScopeChecker;
 import gr.hua.dit.compilers.visitors.TypeChecker;
 
